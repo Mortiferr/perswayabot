@@ -1,5 +1,5 @@
 # perswayable-bot
-A bot for the streamer, Persway.
+A bot for the streamer, Perswayable.
 
 ## Installation instructions
 
