@@ -18,24 +18,41 @@ client.on("message", message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'customhunter') {
-    let hunterId = args[0];
-    message
-      .reply(
-        `I've added you to the queue for Hunter. Remeber this is **NOT** a guarantee, it is a *queue*. Your ID you entered is: ${hunterId}`
-      );
-    client.channels
-      .get(config.channelIds.hunters)
-      .send(`${message.author} - ${hunterId}`);
+    let arg1 = args[0];
+    let role = message.guild.roles.get("491629423683174402");
+    let member = message.member;
+    if (message.member.roles.has(role.id)) {
+      message
+        .reply(
+          `You're already in the queue. You can't join again. Sorry!`
+        );
+    }
+    else {
+      message
+        .reply(
+          `I've added you to the queue for Hunter. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1}`
+        );
+      client.channels
+        .get(config.channelIds.hunters)
+        .send(`${message.author} - ${arg1}`);
+      member
+        .addRole(role)
+        .catch(console.error);
+    }
   } else
   if (command === 'customsurvivor') {
-    let survivorId = args[0];
-    message
-      .reply(
-        `I've added you to the queue for Survivor. Remeber this is **NOT** a guarantee, it is a *queue*. Your ID you entered is: ${survivorId}`
-      );
-    client.channels
-      .get(config.channelIds.survivors)
-      .send(`${message.author} - ${survivorId}`);
+    let arg1 = args[0];
+    let role = message.guild.roles.get("491629423683174402");
+    let member = message.member;
+    if (message.member.roles.has(role.id)) {
+      message.reply(`You're already in the queue. You can't join again. Sorry!`);
+    } else {
+      message.reply(`I've added you to the queue for Survivor. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1}`);
+      client.channels
+        .get(config.channelIds.survivors)
+        .send(`${message.author} - ${arg1}`);
+      member.addRole(role).catch(console.error);
+    }
   }
 });
 
