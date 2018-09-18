@@ -19,18 +19,24 @@ client.on("message", message => {
 
   if (command === 'customhunter') {
     let hunterId = args[0];
-    message.reply(`I've added you to the queue for Hunter. Remeber this is **NOT** a guarantee, it is a *queue*. Your ID you entered is: ${hunterId}`);
+    message
+      .reply(
+        `I've added you to the queue for Hunter. Remeber this is **NOT** a guarantee, it is a *queue*. Your ID you entered is: ${hunterId}`
+      );
     client.channels
       .get(config.channelIds.hunters)
       .send(`${message.author} - ${hunterId}`);
   } else
-    if (command === 'customsurvivor') {
-      let survivorId = args[0];
-      message.reply(`I've added you to the queue for Survivor. Remeber this is **NOT** a guarantee, it is a *queue*. Your ID you entered is: ${survivorId}`);
-      client.channels
-        .get(config.channelIds.survivors)
-        .send(`${message.author} - ${survivorId}`);
-    }
+  if (command === 'customsurvivor') {
+    let survivorId = args[0];
+    message
+      .reply(
+        `I've added you to the queue for Survivor. Remeber this is **NOT** a guarantee, it is a *queue*. Your ID you entered is: ${survivorId}`
+      );
+    client.channels
+      .get(config.channelIds.survivors)
+      .send(`${message.author} - ${survivorId}`);
+  }
 });
 
 client.login(config.token)
