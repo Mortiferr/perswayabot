@@ -10,3 +10,6 @@ module.exports = {
       ]
     }
   }
+module.exports = {
+  title: "Perswayable Discord Bot"
+};
