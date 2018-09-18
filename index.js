@@ -19,7 +19,7 @@ client.on("message", message => {
 
   if (command === 'customhunter') {
     let arg1 = args[0];
-    let role = message.guild.roles.get("491629423683174402");
+    let role = message.guild.roles.get(config.roleId);
     let member = message.member;
     if (message.member.roles.has(role.id)) {
       message
@@ -42,7 +42,7 @@ client.on("message", message => {
   } else
   if (command === 'customsurvivor') {
     let arg1 = args[0];
-    let role = message.guild.roles.get("491629423683174402");
+    let role = message.guild.roles.get(config.roleId);
     let member = message.member;
     if (message.member.roles.has(role.id)) {
       message.reply(`You're already in the queue. You can't join again. Sorry!`);
