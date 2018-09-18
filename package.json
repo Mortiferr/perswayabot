@@ -1,24 +1,28 @@
 {
   "name": "js",
   "version": "1.0.0",
-  "main": "bot.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+    "url": "https://github.com/Mortiferr/perswayable-bot.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Patrick Black Jr",
+  "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+    "url": "https://github.com/Mortiferr/perswayable-bot/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "homepage": "https://mortiferr.github.io/perswayable-bot/",
   "dependencies": {
     "discord.js": "^11.4.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "vuepress": "^0.14.4"
+  },
   "description": ""
 }
