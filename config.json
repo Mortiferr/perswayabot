@@ -1,4 +1,9 @@
 {
-  "token": "NDkxNzk0OTQxNzQ4NTc2MjU3.DoNDVw.vuIVY18Q08yaYRxYAIFEuSblqtk",
-  "prefix": "!"
+  "token": "NDkxNzk0OTQxNzQ4NTc2MjU3.DoNELQ.dMPw6ukstRyzk1Eoip53FO7fO1E",
+  "prefix": "!",
+  "channelIds": {
+    "hunters": "491733751186063361",
+    "survivors": "491733709838352409"
+  },
+  "roleId": "491734607901884426"
 }
