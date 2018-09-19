@@ -32,7 +32,7 @@ client.on("message", message => {
       message.reply(`I've added you to the queue for Hunter. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1} and the IGN you entered is: ${arg2}.`);
       client.channels
         .get(config.channelIds.hunters)
-        .send(`${message.author} - ${arg1}`);
+        .send(`${message.author} - ${arg1} - ${arg2}`);
       member
         .addRole(role)
         .catch(console.error);
@@ -49,7 +49,7 @@ client.on("message", message => {
       message.reply(`I've added you to the queue for Survivor. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1} and the IGN you entered is: ${arg2}.`);
       client.channels
         .get(config.channelIds.survivors)
-        .send(`${message.author} - ${arg1}`);
+        .send(`${message.author} - ${arg1} - ${arg2}`);
       member.addRole(role).catch(console.error);
     }
   } else
