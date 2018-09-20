@@ -1,4 +1,3 @@
-// requires
 const config = require('./config.json');
 const Discord = require('discord.js');
 
