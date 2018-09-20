@@ -1,7 +1,7 @@
 {
   "name": "perswayable-bot",
-  "version": "1.0.1",
-  "description": "A bot for the streamer, Persway.",
+  "version": "1.1.2",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,5 @@
     "discord.js": "^11.4.2",
     "forever": "^0.15.3"
   },
-  "devDependencies": {},
-  "description": ""
+  "devDependencies": {}
 }
