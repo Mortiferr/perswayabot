@@ -19,27 +19,18 @@ client.on('message', message => {
     .trim()
     .split(/ +/g);
   const command = args.shift().toLowerCase();
-  const commandActive = true;
 
-  if (command === 'start') {
-    message.reply(`The start command works.`);
-  }
-
-  if (
-    command === 'customhunter' ||
-    commandActive === true ||
-    commandActive === true
-  ) {
+  if (command === 'customhunter') {
     let arg1 = args[0];
     let arg2 = args[1];
     let role = message.guild.roles.get(config.roleId);
     let member = message.member;
-    const commandActive = false;
     if (message.member.roles.has(role.id)) {
       message.reply(
         `You're already in the queue. You can't join again. Sorry!`
       );
-    } else {
+    } 
+    else {
       message.reply(
         `I've added you to the queue for Hunter. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1} and the IGN you entered is: ${arg2}.`
       );
@@ -48,12 +39,12 @@ client.on('message', message => {
         .send(`${message.author} - ${arg1} - ${arg2}`);
       member.addRole(role).catch(console.error);
     }
-  } else if (command === 'customsurvivor') {
+  } 
+  else if (command === 'customsurvivor') {
     let arg1 = args[0];
     let arg2 = args[1];
     let role = message.guild.roles.get(config.roleId);
     let member = message.member;
-    const commandActive = false;
     if (message.member.roles.has(role.id)) {
       message.reply(
         `You're already in the queue. You can't join again. Sorry!`
@@ -67,7 +58,8 @@ client.on('message', message => {
         .send(`${message.author} - ${arg1} - ${arg2}`);
       member.addRole(role).catch(console.error);
     }
-  } else if (command === 'resetqueue') {
+  }
+  else if (command === 'resetqueue') {
     // Remove all from Queued role
 
     // Purge messages
