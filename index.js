@@ -19,6 +19,7 @@ client.on("message", message => {
 
   if (command === 'customhunter') {
     let arg1 = args[0];
+    let arg2 = args[1];
     let role = message.guild.roles.get(config.roleId);
     let member = message.member;
     if (message.member.roles.has(role.id)) {
@@ -28,13 +29,10 @@ client.on("message", message => {
         );
     }
     else {
-      message
-        .reply(
-          `I've added you to the queue for Hunter. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1}`
-        );
+      message.reply(`I've added you to the queue for Hunter. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1} and the IGN you entered is: ${arg2}.`);
       client.channels
         .get(config.channelIds.hunters)
-        .send(`${message.author} - ${arg1}`);
+        .send(`${message.author} - ${arg1} - ${arg2}`);
       member
         .addRole(role)
         .catch(console.error);
@@ -42,15 +40,16 @@ client.on("message", message => {
   } else
   if (command === 'customsurvivor') {
     let arg1 = args[0];
+    let arg2 = args[1];
     let role = message.guild.roles.get(config.roleId);
     let member = message.member;
     if (message.member.roles.has(role.id)) {
       message.reply(`You're already in the queue. You can't join again. Sorry!`);
     } else {
-      message.reply(`I've added you to the queue for Survivor. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1}`);
+      message.reply(`I've added you to the queue for Survivor. Remember this is **NOT** a guarantee. Your ID you entered is: ${arg1} and the IGN you entered is: ${arg2}.`);
       client.channels
         .get(config.channelIds.survivors)
-        .send(`${message.author} - ${arg1}`);
+        .send(`${message.author} - ${arg1} - ${arg2}`);
       member.addRole(role).catch(console.error);
     }
   } else

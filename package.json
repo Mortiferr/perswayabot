@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/Mortiferr/perswayable-bot#readme",
   "dependencies": {
-    "discord.js": "^11.4.2"
-  }
+    "discord.js": "^11.4.2",
+    "forever": "^0.15.3"
+  },
+  "devDependencies": {},
+  "description": ""
 }
