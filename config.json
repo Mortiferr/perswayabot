@@ -9,11 +9,11 @@
   },
   "dev": {
     "token": "NDkxNzk0OTQxNzQ4NTc2MjU3.DoVMyA.PvMF0Fb8bbvsTMqG1p5Fy288bXA",
-    "prefix": "!",
     "channelIds": {
       "hunters": "491466153886220288",
       "survivors": "491494829558202368"
     },
     "roleId": "491629423683174402"
-  }
+  },
+  "prefix": "!"
 }
