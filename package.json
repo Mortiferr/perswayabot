@@ -1,21 +1,21 @@
 {
-  "name": "js",
-  "version": "1.0.0",
-  "main": "bot.js",
+  "name": "perswayable-bot",
+  "version": "1.0.1",
+  "description": "A bot for the streamer, Persway.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+    "url": "git+https://github.com/Mortiferr/perswayable-bot.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Patrick Black Jr",
+  "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+    "url": "https://github.com/Mortiferr/perswayable-bot/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "homepage": "https://github.com/Mortiferr/perswayable-bot#readme",
   "dependencies": {
     "discord.js": "^11.4.2",
     "forever": "^0.15.3"
