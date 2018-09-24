@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "forever start index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,10 @@
   "homepage": "https://github.com/Mortiferr/perswayable-bot#readme",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "forever": "^0.15.3"
+    "dotenv": "^6.0.0",
+    "forever": "^0.15.3",
+    "mongoose": "^5.2.17",
+    "nvm": "0.0.4"
   },
   "devDependencies": {}
 }
