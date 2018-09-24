@@ -60,7 +60,7 @@ client.on('message', message => {
     .slice(config.prefix.length)
     .trim()
     .split(/ +/g);
-  const command = args.shift().toLowerCase();
+  const command = args.shift().toLowerCase();   
 
   if (command === 'custom') {
     let team = args[0];
