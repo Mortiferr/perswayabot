@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-// const config = require('./config.json');
+const config = require('./config.json');
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
 // const playerBase = require('./db/player.model.js')
@@ -54,10 +54,10 @@ client.on('message', message => {
       .catch(console.error)
   }
   
-  if (message.content.indexOf(process.env.PREFIX) !== 0) return;
+  if (message.content.indexOf(config.prefix) !== 0) return;
 
   const args = message.content
-    .slice(process.env.PREFIX.length)
+    .slice(config.prefix.length)
     .trim()
     .split(/ +/g);
   const command = args.shift().toLowerCase();
