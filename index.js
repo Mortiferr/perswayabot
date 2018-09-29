@@ -2,12 +2,13 @@ const dotenv = require('dotenv').config();
 const config = require('./config.json');
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
-// const playerBase = require('./db/player.model.js')
+const playerBase = require('./db/player')
+const ObjectID = require('mongodb').ObjectID;
 
 let dev_db_url = `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@ds123971.mlab.com:23971/playerbase`
 let mongodb = mongoDB = process.env.MONGODB_URI || dev_db_url;
 
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 
 let db = mongoose.connection;
@@ -15,6 +16,8 @@ db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function(callback) {
   console.log('Connection successful.');
 });
+
+let Player = mongoose.model('Player');
 
 const client = new Discord.Client();
 
@@ -127,16 +130,38 @@ client.on('message', message => {
     }
   }
   if (command === 'tourney') {
-    let ign = args[0];
+    let team = args[0];
     let id = args[1];
-    // new Player({
-    //   ign: ign,
-    //   id: id
-    // })
-    message.reply(`Tourney test:
-    IGN: ${ign}
-    ID: ${id}
-    `)
+    let ign = args[2];
+
+    if (team == undefined && id == undefined && ign == undefined) {
+      message.reply(
+        `You can choose **hunter**, **survivor**, or **flex** teams. Flex means you could be either depending on where you're needed.\nYour type this into the chat to sign up, **replacing the ALL CAPS words with your own information.**\n\`!tourney YOURTEAM YOURID YOURIGN\`\n\nFor example: \`!tourney flex 1234567 XxJohnCenaxX\`\n\nIf you need any help, feel free to ask and one of our helpful staff members will assist you!`
+      )
+      return;
+    }
+    if (team == undefined || id == undefined || ign == undefined) {
+      message.reply(
+        `Whoops! You forgot something. Your command should be like this: \`\``
+      )
+      return;
+    }
+    let newPlayer = new Player({
+      team: team,
+      ign: ign,
+      id: id,
+      __id: new ObjectID()
+    })
+
+    db.collection('playerBase').insertOne(newPlayer);
+
+    message.reply(
+      `Tourney test:\nID: ${id}\nIGN: ${ign}`
+    )
+  }
+  if (command === 'info') {
+    let subSection = args[0];
+    
   }
 });
 
