@@ -2,7 +2,7 @@ module.exports = {
   name: 'custom',
   description: 'Joins the queue to play a custom game with Perswayable.',
   args: true,
-  cooldown: 10,
+  cooldown: 1,
   execute(message, args, client) {
     let team = args[0];
     let id = args[1];
