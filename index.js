@@ -33,7 +33,7 @@ for (const file of commandFiles) {
 }
 
 client.on('ready', async () => {
-  console.log(`${client.user.username} loaded successfully.`);
+  console.log(`${client.user.username} is now online.`);
   client.user.setPresence({ game: { name: 'Dead by Daylight' }, status: 'online' })
     .catch(console.error);
 });
@@ -44,19 +44,18 @@ client.on('message', message => {
 
   const shortLinks = ["goo.gl", "shorte.st", "adf.ly", "bc.vc", "bit.ly", "bit.do", "soo.gd", "7.ly", "5.gp", "tiny.cc", "ouo.io", "zzb.bz", "adfoc.us", "my.su"]
   const swearWords = ["faggot", "gini", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer"]
-  const thicc = ["thicc"];
 
-  if (thicc.some(word => message.content.toLowerCase().includes(word))) {
+  if (message.content.toLowerCase().includes('thicc')) {
     Promise.all([
       message.react('🍑'),
       message.react('490772478700814336'),
     ])
-      .catch(() => console.error('One of the emojis didn\'t react on the !thicc command.'));
+      .catch(() => console.error('One of the emojis didn\'t react on thicc.'));
   }
 
   if (swearWords.some(word => message.content.toLowerCase().includes(word))) {
     message.delete();
-    message.author.send(`Hey, please don't use that word in Perswayable's Discord. Thanks.`);
+    message.author.send(`Do not use that word in Perswayable's Discord. Thanks.`);
     client.channels
       .find(c => c.name === 'logs')
       .send(`${message.author} posted a racist / sexist / disablist slur that was deleted by ${client.user.username}. They've been warned via DM. Message: \`${message}\``)
