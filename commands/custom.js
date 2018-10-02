@@ -32,8 +32,9 @@ module.exports = {
             `I've added you to the queue for **${team}**. Remember this is *NOT* a guarantee. Your ID you entered is: **${id}** and the IGN you entered is: **${ign}**.`
           );
           client.channels
-            .get(process.env.HUNTER)
-            .send(`${message.author} - ${id} - ${ign}`);
+            .find(c => c.name === 'hunters')
+            .send(`${message.author} - ${id} - ${ign}`)
+            .catch(console.error)
           member.addRole(role).catch(console.error);
         }
       }
@@ -50,8 +51,9 @@ module.exports = {
             `I've added you to the queue for **${team}**. Remember this is *NOT* a guarantee. Your ID you entered is: **${id}** and the IGN you entered is: **${ign}**.`
           );
           client.channels
-            .get(process.env.SURVIVOR)
-            .send(`${message.author} - ${id} - ${ign}`);
+            .find(c => c.name === 'survivors')
+            .send(`${message.author} - ${id} - ${ign}`)
+            .catch(console.error)
           member.addRole(role).catch(console.error);
         }
       }
@@ -62,5 +64,5 @@ module.exports = {
       )
       return;
     }
-  }
-}
+  },
+};

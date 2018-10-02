@@ -8,8 +8,7 @@ const ObjectID = require('mongodb').ObjectID;
 
 let prefix = config.prefix;
 
-let dev_db_url = `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@ds123971.mlab.com:23971/playerbase`
-let mongodb = mongoDB = process.env.MONGODB_URI || dev_db_url;
+let mongodb = mongoDB = process.env.MONGODB_URI
 
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
@@ -40,7 +39,30 @@ client.on('ready', async () => {
 });
 
 client.on('message', message => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+  if (message.author.bot) return;
+
+  const shortLinks = ["goo.gl", "shorte.st", "adf.ly", "bc.vc", "bit.ly", "bit.do", "soo.gd", "7.ly", "5.gp", "tiny.cc", "ouo.io", "zzb.bz", "adfoc.us", "my.su"]
+  const swearWords = ["faggot", "gini", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer"]
+
+  if (swearWords.some(word => message.content.toLowerCase().includes(word))) {
+    message.delete();
+    message.author.send(`Hey, please don't use that word in Perswayable's Discord. Thanks.`);
+    client.channels
+      .find(c => c.name === 'logs')
+      .send(`${message.author} posted a racist / sexist / disablist slur that was deleted by ${client.user.username}. They've been warned via DM. Message: \`${message}\``)
+      .catch(console.error)
+  }
+
+  if (shortLinks.some(word => message.content.includes(word))) {
+    message.delete();
+    message.author.send(`Hey, please don't send short links in Perswayable's Discord. You can post the link, just send the full length one. Thanks :)`);
+    client.channels
+      .find(c => c.name === 'logs')
+      .send(`${message.author} posted a link that was deleted by ${client.user.username}. They've been warned via DM.`)
+      .catch(console.error)
+  }
+
 
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -94,27 +116,6 @@ client.on('message', message => {
   catch (error) {
     console.error(error);
   }
-  
-  // const shortLinks = ["goo.gl", "shorte.st", "adf.ly", "bc.vc", "bit.ly", "bit.do", "soo.gd", "7.ly", "5.gp", "tiny.cc", "ouo.io", "zzb.bz", "adfoc.us", "my.su"]
-  // const swearWords = ["faggot", "gini", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer",]
-
-  // if (swearWords.some(word => message.content.toLowerCase().includes(word))) {
-  //   message.delete();
-  //   message.author.send(`Hey, please don't use that word in Perswayable's Discord. Thanks.`);
-  //   client.channels
-  //     .find(c => c.name === 'logs')
-  //     .send(`${message.author} posted a racist / sexist / disablist slur that was deleted by ${client.user.username}. They've been warned via DM.`)
-  //     .catch(console.error)
-  // }
-
-  // if (shortLinks.some(word => message.content.includes(word))) {
-  //   message.delete();
-  //   message.author.send(`Hey, please don't send short links in Perswayable's Discord. You can post the link, just send the full length one. Thanks :)`);
-  //   client.channels
-  //     .find(c => c.name === 'logs')
-  //     .send(`${message.author} posted a link that was deleted by ${client.user.username}. They've been warned via DM.`)
-  //     .catch(console.error)
-  // }
 });
 
 client.login(process.env.TOKEN);

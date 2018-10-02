@@ -1,9 +1,25 @@
+const mongoose = require('mongoose');
+const playerBase = require('../db/player')
+const ObjectID = require('mongodb').ObjectID;
+let Player = mongoose.model('Player');
+let mongodb = mongoDB = process.env.MONGODB_URI
+
+let db = mongoose.connection;
+
 module.exports = {
   name: 'tourney',
   description: 'Joins the tournament.',
   args: true,
   cooldown: 1,
   execute(message, args, client) {
+    let role = message.guild.roles.get(process.env.TOURNEYROLEID);
+    let member = message.member;
+    // Checks if they have the role, and if they do, stop exit early.
+    if (message.member.roles.has(role.id)) {
+      message.reply(`Sorry! You've already entered the tournament! You can lookup your entry by doing \`!lookup\`.`)
+      return
+    }
+
     let team = args[0];
     let id = args[1];
     let ign = args[2];
@@ -16,7 +32,7 @@ module.exports = {
     }
     if (team == undefined || id == undefined || ign == undefined) {
       message.reply(
-        `Whoops! You forgot something. Your command should be like this: \`\``
+        `Whoops! You forgot something. Your command should be like this: \`!tourney YOURTEAM YOURID YOURIGN\`. Type \`!info tourney\` for more information.`
       )
       return;
     }
@@ -30,7 +46,14 @@ module.exports = {
     db.collection('playerBase').insertOne(newPlayer);
 
     message.reply(
-      `Tourney test:\nID: ${id}\nIGN: ${ign}`
+      `You entered the tournament as a ${team}!\nIGN: ${ign}\nID: ${id}`
     )
-  }
-}
+    member.addRole(role)
+      .catch(console.error);
+    client.channels
+      .find(c => c.name === 'tournament')
+      .send(`${message.author} entered the tournament as a ${team}! IGN: ${ign} ID: ${id}`)
+      .catch(console.error)
+    return;
+  },
+};
