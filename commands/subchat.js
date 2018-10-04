@@ -1,4 +1,3 @@
-//489224374885416970
 module.exports = {
   name: 'subchat',
   description: 'Staff only.',
