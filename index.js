@@ -71,8 +71,9 @@ client.on('message', message => {
       .catch(console.error)
   }
 
+  if (message.content.indexOf(config.prefix) !== 0) return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
+  const args = message.content.slice(prefix.length).split(/ +/g);
   const commandName = args.shift().toLowerCase();
 
   const command = client.commands.get(commandName)

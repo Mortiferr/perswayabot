@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const mongoose = require('mongoose');
 const playerBase = require('../db/player')
 const ObjectID = require('mongodb').ObjectID;
@@ -12,28 +13,27 @@ module.exports = {
   args: true,
   cooldown: 5,
   execute(message, args, client) {
-    // let lookupParam = args[0];
-    // let lookupItem = args[1];
-    // let collection = db.collection('playerBase');
+    let lookupParam = args[0];
+    let lookupItem = args[1];
+    let collection = db.collection('playerBase');
 
-    // return collection.find().toArray();
+    Player.findOne({
+      lookupParam: lookupItem 
+    }, (err, res) => {
+      if (err) console.error(err);
 
-    // playerBase.find({lookupParam: lookupParam}).toArray((err, result) => {
-    //   if (err) {
-    //     message.reply(`You aren't registered in the tourney!`);
-    //   }
-    //   if (result.length) {
-    //     message.reply(`Found: ${result.length}`);
-    //   }
-    //   else {
-    //     console.error(`no reuslt found`);
-    //   }
-    // })
+      let embed = new Discord.RichEmbed()
+        .setAuthor('Tournament Database Request')
+        .setColor('#FCE300')
+      if (!res) {
+        embed.addField('No registration found', 'You are not registered for the tournament. Do `!tourney` to sign up!', true)
+        return message.channel.send(embed);
+      }
+      else {
+        embed.addField('Registration found', 'Coming soon', true)
+      }
+    })
 
-    // const query = db.collection('playerBase').find({
-    //   lookupParam: lookupItem
-    // });
-    // db.Player.find
     if (!lookupItem) {
       message.reply(`You didn't provide your IGN or ID.`)
       return
