@@ -2,7 +2,6 @@ module.exports = {
   name: 'subchat',
   description: 'Staff only.',
   usage: '',
-  cooldown: 2,
   execute(message, args, client) {
     if (message.member.hasPermission('KICK_MEMBERS')) {
       message.channel.send('Are you sure you want to send an announcement to all subscribers? Type `YES` to confirm.')
