@@ -2,8 +2,9 @@ module.exports = {
   name: 'resetqueue',
   description: 'Admin only. Resets the custom match w/ Persway queue.',
   execute(message, client) {
-    if (!message.member.hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return message.reply(`That ain't it, chief.`);
-    let role = message.guild.roles.find(`name`, `Queued`);
+    if (!message.member.hasPermission('BAN_MEMBERS')) return message.reply(`That ain't it, chief.`);
+
+    let role = message.guild.roles.find(r => r.name === 'Queued');
     role.delete()
       .catch(console.error);
     message.guild.createRole({
