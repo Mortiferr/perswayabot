@@ -18,7 +18,7 @@ module.exports = {
       return;
     }
     if (team == 'hunter' || team == 'survivor') {
-      let role = message.guild.roles.get(process.env.QED);
+      let role = message.guild.roles.find(`name`, `Queued`);
       let member = message.member;
 
       if (team === 'hunter') {
@@ -40,7 +40,7 @@ module.exports = {
       }
 
       else if (team === 'survivor') {
-        let role = message.guild.roles.get(process.env.QED);
+        let role = message.guild.roles.find(`name`, `Queued`);
         let member = message.member;
         if (message.member.roles.has(role.id)) {
           message.reply(
