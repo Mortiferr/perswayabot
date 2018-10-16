@@ -1,17 +1,17 @@
-const mongoose = require('mongoose');
-const playerBase = require('../db/player')
-const ObjectID = require('mongodb').ObjectID;
+exports.run = (client, message, args, level) => {
+  message.reply(`:no_entry_sign: Yo homes, this command isn't ready yet. :no_entry_sign:`)
+}
 
-let Player = mongoose.model('Player');
-let mongodb = mongoDB = process.env.MONGODB_URI
-let db = mongoose.connection;
+exports.conf = {
+  enabled: false,
+  guildOnly: false,
+  aliases: [],
+  permLevel: 'Administrator'
+};
 
-const reportSchema = mongoose.Schema({
-  __id: mongoose.Schema.Types.ObjectId,
-  username: String,
-  userId: String,
-  reason: String,
-  reportedBy: String,
-  reportedById: String,
-  time: String
-});
+exports.help = {
+  name: 'report',
+  category: 'Main',
+  description: 'Report another member of the discord.',
+  usage: 'report [@user] [reason] (without brackets)'
+}

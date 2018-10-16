@@ -1,130 +1,81 @@
-const dotenv = require('dotenv').config();
-const fs = require('fs');
-const config = require('./config.json');
-const Discord = require('discord.js');
-const mongoose = require('mongoose');
-const playerBase = require('./db/player')
-const ObjectID = require('mongodb').ObjectID;
+// This will check if the node version you are running is the required
+// Node version, if it isn't it will throw the following error to inform
+// you.
+if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
-let prefix = config.prefix;
+// Load up the discord.js library
+const Discord = require("discord.js");
+// We also load the rest of the things we need in this file:
+const { promisify } = require("util");
+const readdir = promisify(require("fs").readdir);
+const Enmap = require("enmap");
 
-let mongodb = mongoDB = process.env.MONGODB_URI
-
-mongoose.connect(mongoDB, {useNewUrlParser: true});
-mongoose.Promise = global.Promise;
-
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error'));
-db.once('open', function(callback) {
-  console.log('Connection successful.');
-});
-
-let Player = mongoose.model('Player');
-
+// This is your client. Some people call it `bot`, some people call it `self`,
+// some might call it `cootchie`. Either way, when you see `client.something`,
+// or `bot.something`, this is what we're refering to. Your client.
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
-const cooldowns = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+// Here we load the config file that contains our token and our prefix values.
+client.config = require("./config.js");
+// client.config.token contains the bot's token
+// client.config.prefix contains the message prefix
 
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands.set(command.name, command);
-}
+// Require our logger
+client.logger = require("./util/Logger");
 
-client.on('ready', async () => {
-  console.log(`${client.user.username} is now online.`);
-  client.user.setPresence({ game: { name: 'Dead by Daylight' }, status: 'online' })
-    .catch(console.error);
-});
+// Let's start by getting some useful functions that we'll use throughout
+// the bot, like logs and elevation features.
+require("./modules/functions.js")(client);
 
-client.on('message', message => {
+// Aliases and commands are put in collections where they can be read from,
+// catalogued, listed, etc.
+client.commands = new Enmap();
+client.aliases = new Enmap();
 
-  if (message.author.bot) return;
+// Now we integrate the use of Evie's awesome Enhanced Map module, which
+// essentially saves a collection to disk. This is great for per-server configs,
+// and makes things extremely easy for this purpose.
+client.settings = new Enmap({ name: "settings" });
 
-  const shortLinks = ["goo.gl", "shorte.st", "adf.ly", "bc.vc", "bit.ly", "bit.do", "soo.gd", "7.ly", "5.gp", "tiny.cc", "ouo.io", "zzb.bz", "adfoc.us", "my.su"]
-  const swearWords = ["faggot", "gini", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer"]
+// We're doing real fancy node 8 async/await stuff here, and to do that
+// we need to wrap stuff in an anonymous function. It's annoying but it works.
 
-  if (message.content.toLowerCase().includes('thicc')) {
-    Promise.all([
-      message.react('🍑'),
-      message.react('490772478700814336'),
-    ])
-      .catch(() => console.error('One of the emojis didn\'t react on thicc.'));
+const init = async () => {
+
+  // Here we load **commands** into memory, as a collection, so they're accessible
+  // here and everywhere else.
+  const cmdFiles = await readdir("./commands/");
+  client.logger.log(`Loading a total of ${cmdFiles.length} commands.`);
+  cmdFiles.forEach(f => {
+    if (!f.endsWith(".js")) return;
+    const response = client.loadCommand(f);
+    if (response) console.log(response);
+  });
+
+  // Then we load events, which will include our message and ready event.
+  const evtFiles = await readdir("./events/");
+  client.logger.log(`Loading a total of ${evtFiles.length} events.`);
+  evtFiles.forEach(file => {
+    const eventName = file.split(".")[0];
+    client.logger.log(`Loading Event: ${eventName}`);
+    const event = require(`./events/${file}`);
+    // Bind the client to any event, before the existing arguments
+    // provided by the discord.js event. 
+    // This line is awesome by the way. Just sayin'.
+    client.on(eventName, event.bind(null, client));
+  });
+
+  // Generate a cache of client permissions for pretty perm names in commands.
+  client.levelCache = {};
+  for (let i = 0; i < client.config.permLevels.length; i++) {
+    const thisLevel = client.config.permLevels[i];
+    client.levelCache[thisLevel.name] = thisLevel.level;
   }
 
-  if (swearWords.some(word => message.content.toLowerCase().includes(word))) {
-    message.delete();
-    message.author.send(`Do not use that word in Perswayable's Discord. Thanks.`);
-    client.channels
-      .find(c => c.name === 'logs')
-      .send(`${message.author} posted a racist / sexist / disablist slur that was deleted by ${client.user.username}. They've been warned via DM. Message: \`${message}\``)
-      .catch(console.error)
-  }
+  // Here we login the client.
+  client.login(client.config.token);
 
-  if (shortLinks.some(word => message.content.includes(word))) {
-    message.delete();
-    message.author.send(`Hey, please don't send short links in Perswayable's Discord. You can post the link, just send the full length one. Thanks :)`);
-    client.channels
-      .find(c => c.name === 'logs')
-      .send(`${message.author} posted a link that was deleted by ${client.user.username}. They've been warned via DM.`)
-      .catch(console.error)
-  }
+  // End top-level async/await function.
+};
 
-  if (message.content.indexOf(config.prefix) !== 0) return;
-
-  const args = message.content.slice(prefix.length).split(/ +/g);
-  const commandName = args.shift().toLowerCase();
-
-  const command = client.commands.get(commandName)
-    || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
-  if (!command) return;
-
-  if (command.guildOnly && message.channel.type !== 'text') {
-    return message.reply('I can\'t execute that command inside DMs!');
-  }
-
-  if (command.args && !args.length) {
-    let reply = `You didn't provide any arguments, ${message.author}!`;
-
-    if (command.usage) {
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-    }
-
-    return message.channel.send(reply);
-  }
-
-  if (!cooldowns.has(command.name)) {
-    cooldowns.set(command.name, new Discord.Collection());
-  }
-
-  const now = Date.now();
-  const timestamps = cooldowns.get(command.name);
-  const cooldownAmount = (command.cooldown || 3) * 1000;
-
-  if (!timestamps.has(message.author.id)) {
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-  }
-  else {
-    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-    if (now < expirationTime) {
-      const timeLeft = (expirationTime - now) / 1000;
-      return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
-    }
-
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-  }
-
-  try {
-    command.execute(message, args, client);
-  }
-  catch (error) {
-    console.error(error);
-  }
-});
-
-client.login(process.env.TOKEN);
+init();

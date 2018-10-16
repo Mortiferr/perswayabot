@@ -1,31 +1,24 @@
-module.exports = {
-  name: 'prune',
-  description: 'Clean messages.',
-  args: true,
-  cooldown: 1,
-  execute(message, args, client) {
-    const user = message.mentions.users.first();
-    // Parse Amount
-    const amount = !!parseInt(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[1]) : parseInt(message.content.split(' ')[2])
-    if (!amount) return message.reply('Must specify an amount to delete!');
-    if (!amount && !user) return message.reply('Must specify a user and amount, or just an amount, of messages to purge!');
-    // Fetch 100 messages (will be filtered and lowered up to max amount requested)
-    message.channel.fetchMessages({
-      limit: 100,
-    }).then((messages) => {
-      if (user) {
-        const filterBy = user ? user.id : client.user.id;
-        messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
-      }
-      message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-    });
-  },
+exports.run = async (client, message, args, level) => {
+  const deleteCount = parseInt(args[0], 10);
+
+  if (!deleteCount || deleteCount < 2 || deleteCount > 100)
+    return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
+
+  const fetched = await message.channel.fetchMessages({ limit: deleteCount });
+  message.channel.bulkDelete(fetched)
+    .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+}
+
+exports.conf = {
+  enabled: true,
+  guildOnly: true,
+  aliases: ["purge"],
+  permLevel: 'Moderator'
 };
 
-
-
-
-
-
-
-
+exports.help = {
+  name: 'prune',
+  category: 'Moderation',
+  description: 'Prune or purge messages.',
+  usage: 'purge [#] (without brackets)'
+}
