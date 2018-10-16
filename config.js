@@ -19,7 +19,8 @@ const config = {
   "defaultSettings": {
     "prefix": "!",
     "modLogChannel": "logs",
-    "modRole": "Moderator",
+    "modRole1": "Moderators",
+    "modRole2": "Head Moderators",
     "adminRole": "Administrator",
     "systemNotice": "true", // This gives a notice when a user tries to run a command that they do not have permission to use.
     "welcomeChannel": "welcome",
@@ -50,8 +51,10 @@ const config = {
       // If they don't then return false, which will prevent them from executing the command.
       check: (message) => {
         try {
-          const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
-          if (modRole && message.member.roles.has(modRole.id)) return true;
+          const modRole1 = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole1.toLowerCase());
+          const modRole2 = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole2.toLowerCase());
+          if (modRole1 && message.member.roles.has(modRole1.id)) return true;
+          if (modRole2 && message.member.roles.has(modRole2.id)) return true;
         } catch (e) {
           return false;
         }
