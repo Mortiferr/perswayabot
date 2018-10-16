@@ -25,7 +25,6 @@
     "dotenv": "^6.1.0",
     "enmap": "^4.3.2",
     "enmap-sqlite": "^2.0.5",
-    "forever": "^0.15.3",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "mongoose": "^5.2.17"
