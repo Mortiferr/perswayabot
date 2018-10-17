@@ -1,12 +1,21 @@
 exports.run = async (client, message, args, level) => {
   const deleteCount = parseInt(args[0], 10);
 
-  if (!deleteCount || deleteCount < 1 || deleteCount > 100)
-    return message.reply("Please provide a number between 1 and 100 for the number of messages to delete");
+  if (!message.member.hasPermission('MANAGE_MESSAGES')) 
+    return message.channel.send('Sorry, but you do not have the **Manage Messages** permissions! If you think this is an error, contact an <@136943278854504448>');
+  if (!message.guild.member(client.user).hasPermission('MANAGE_MESSAGES'))
+    return message.channel.send('I do not have the **Manage Messages** permission in this server.');
 
-  const fetched = await message.channel.fetchMessages({ limit: deleteCount });
-  message.channel.bulkDelete(fetched)
-    .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+  if (!args[0]) return message.channel.send('You must specify a number of messages.');
+  if (args[0] < 1) return message.channel.send('Please provide a number greater than 1.');
+  if (args[0] > 100) return message.channel.send('Please provide a number less than 100.');
+  if (isNaN(args[0])) return message.channel.send('Please provide a correct number.');
+
+  message.delete(); // delete the original prune message
+
+  message.channel.bulkDelete(args[0]).then(() => {
+    message.channel.send(`🗑 I deleted **${args[0]}** messages.`).then(message => message.delete(3000));
+  }).catch().catch((e) => message.channel.send('You can not delete messages older than 14 days.'));
 }
 
 exports.conf = {
