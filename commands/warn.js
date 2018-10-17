@@ -6,12 +6,12 @@ exports.conf = {
   enabled: false,
   guildOnly: false,
   aliases: [],
-  permLevel: 'Administrator'
+  permLevel: 'Moderator'
 };
 
 exports.help = {
-  name: 'report',
+  name: 'warn',
   category: 'In Development',
-  description: 'Report another member of the discord.',
-  usage: 'report [@user] [reason] (without brackets)'
+  description: 'in progress',
+  usage: 'warn [@user] [reason] (without brackets)'
 }

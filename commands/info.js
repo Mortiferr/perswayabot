@@ -19,7 +19,7 @@ exports.run = (client, message, args, level) => {
       fields: [
         {
           name: '!tourney command',
-          value: 'Bacon ipsum dolor amet turducken filet mignon strip steak jerky, ham hock tri-tip swine andouille ground round meatloaf beef ribs pork loin.'
+          value: 'Coming soon.'
         }
       ],
       footer: {
