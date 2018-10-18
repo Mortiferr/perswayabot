@@ -8,14 +8,6 @@ const config = {
   // Bot Support, level 8 by default. Array of user ID strings
   "support": ["136943278854504448"],
 
-  // Your Bot's Token. Available on https://discordapp.com/developers/applications/me
-  "token": "NDkxNzk0OTQxNzQ4NTc2MjU3.DqcC2Q.tgBUiwWxQ0DUPeWRTOiL-dzy83A",
-
-  // Default per-server settings. New guilds have these settings. 
-
-  // DO NOT LEAVE ANY OF THESE BLANK, AS YOU WILL NOT BE ABLE TO UPDATE THEM
-  // VIA COMMANDS IN THE GUILD.
-
   "defaultSettings": {
     "prefix": "!",
     "modLogChannel": "logs",
