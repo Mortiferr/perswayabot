@@ -2,6 +2,16 @@ exports.run = (client, message, args, level) => {
   let whichCommand = args[0];
   let whichSubCommand = args[1];
 
+  if (!whichCommand && !whichSubCommand) {
+    message.reply(`You didn't specify a subcategory.\nCategories:\n  \n- custom  \n- tourney`);
+    return;
+  }
+
+  if (whichCommand === 'custom' && !whichSubCommand) {
+    message.reply(`Specify a sub-command: \`!info custom hunter / survivor\``)
+    return;
+  }
+
   if (whichCommand === 'custom' && whichSubCommand === 'hunter') {
     message.reply(`Copy this and fill in your information: \`!custom hunter 1234566 yourign\``);
   }
