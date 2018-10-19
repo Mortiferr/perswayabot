@@ -1,9 +1,14 @@
+const mongoose = require('mongoose');
 exports.run = (client, message, args, level) => {
-  message.reply(`:no_entry_sign: Yo homes, this command isn't ready yet. :no_entry_sign:`)
+  const Warning = mongoose.model('Warning', {
+    user: String,
+    mod: String,
+    reason: String
+  })
 }
 
 exports.conf = {
-  enabled: false,
+  enabled: true,
   guildOnly: false,
   aliases: [],
   permLevel: 'Moderator'
