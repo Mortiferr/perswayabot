@@ -11,6 +11,35 @@ module.exports = (client, message) => {
   // If there is no guild, get default conf (DMs)
   const settings = message.settings = client.getGuildSettings(message.guild);
 
+  const shortLinks = ["goo.gl", "shorte.st", "adf.ly", "bc.vc", "bit.ly", "bit.do", "soo.gd", "7.ly", "5.gp", "tiny.cc", "ouo.io", "zzb.bz", "adfoc.us", "my.su"]
+  const swearWords = ["faggot", "gini", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer"]
+
+  if (message.content.toLowerCase().includes('thicc')) {
+    Promise.all([
+      message.react('🍑'),
+      message.react('490772478700814336'),
+    ])
+      .catch(() => console.error('One of the emojis didn\'t react on thicc.'));
+  }
+
+  if (swearWords.some(word => message.content.toLowerCase().includes(word))) {
+    message.delete();
+    message.author.send(`Do not use that word in Perswayable's Discord. Thanks.`);
+    client.channels
+      .find(c => c.name === 'logs')
+      .send(`${message.author} posted a racist / sexist / disablist slur that was deleted by ${client.user.username}. They've been warned via DM. Message: \`${message}\``)
+      .catch(console.error)
+  }
+
+  if (shortLinks.some(word => message.content.includes(word))) {
+    message.delete();
+    message.author.send(`Hey, please don't send short links in Perswayable's Discord. You can post the link, just send the full length one. Thanks :)`);
+    client.channels
+      .find(c => c.name === 'logs')
+      .send(`${message.author} posted a link that was deleted by ${client.user.username}. They've been warned via DM.`)
+      .catch(console.error)
+  }
+
   // Also good practice to ignore any message that does not start with our prefix,
   // which is set in the configuration file.
   if (message.content.indexOf(settings.prefix) !== 0) return;
