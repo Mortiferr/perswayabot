@@ -22,7 +22,10 @@ exports.log = (content, type = "log") => {
     case "ready": {
       return console.log(`${timestamp} ${chalk.black.bgGreen(type.toUpperCase())} ${content}`);
     }
-    default: throw new TypeError("Logger type must be either warn, debug, log, ready, cmd or error.");
+    case "connected": {
+      return console.log(`${timestamp} ${chalk.black.bgGreen(type.toUpperCase())} ${content}`);
+    }
+    default: throw new TypeError("Logger type must be either warn, debug, log, ready, cmd, conncted, or error.");
   }
 };
 
@@ -33,3 +36,5 @@ exports.warn = (...args) => this.log(...args, "warn");
 exports.debug = (...args) => this.log(...args, "debug");
 
 exports.cmd = (...args) => this.log(...args, "cmd");
+
+exports.connected = (...args) => this.log(...args, "connected");
