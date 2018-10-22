@@ -21,8 +21,7 @@ exports.run = (client, message, args, level) => {
         message.reply(
           `You're already in the queue. You can't join again. Sorry!`
         );
-      }
-      else {
+      } else {
         message.reply(
           `I've added you to the queue for **${team}**. Remember this is *NOT* a guarantee. Your ID you entered is: **${id}** and the IGN you entered is: **${ign}**.`
         );
@@ -32,9 +31,7 @@ exports.run = (client, message, args, level) => {
           .catch(console.error)
         member.addRole(role).catch(console.error);
       }
-    }
-
-    else if (team === 'survivor') {
+    } else if (team === 'survivor') {
       let role = message.guild.roles.find(r => r.name === 'Queued');
       let member = message.member;
       if (message.member.roles.has(role.id)) {
@@ -52,8 +49,7 @@ exports.run = (client, message, args, level) => {
         member.addRole(role).catch(console.error);
       }
     }
-  }
-  else {
+  } else {
     message.reply(
       `Your team selection should either be **hunter** OR **survivor**. You entered \`${team}\``
     )
