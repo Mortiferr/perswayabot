@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const db = require('quick.db');
-const send = require('quick.hook')
+const send = require('quick.hook');
 
 exports.run = async (client, message, args, level) => {
   const logs = message.guild.channels.find(c => c.name === ('logs'));
