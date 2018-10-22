@@ -20,10 +20,9 @@ exports.run = (client, message, args, level) => {
       // message.channel.send(`Sending...`)
       try {
         send(message.channel, `Okay, sent.`, {
-            name: 'Suggestions System',
-            icon: icon
-          })
-          .then(message => message.delete(3000));
+          name: 'Suggestions System',
+          icon: icon
+        });
       } catch (error) {
         console.error(error)
       }
