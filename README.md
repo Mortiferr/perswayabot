@@ -1,4 +1,4 @@
-# perswayable-bot
+# perswayabot
 A bot for the streamer, Perswayable. Contact me if you want to adapt this bot for your use.
 
 We use [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and [SemVer](https://semver.org/).
