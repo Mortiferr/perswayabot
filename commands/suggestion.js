@@ -6,6 +6,11 @@ exports.run = (client, message, args, level) => {
   const suggestion = message.content.split(' ').slice(1).join(' ');
   const submitter = message.member.user.tag.slice(0, -5);
 
+  if (!suggestion) return send(message.channel, `You need to include a suggestion.`, {
+    name: 'Suggestions System',
+    icon: icon
+  })
+
   send(message.channel, `Are you sure you want to send the suggestion:\n\n\`\`\`${suggestion}\`\`\``, {
     name: 'Suggestions System',
     icon: icon
