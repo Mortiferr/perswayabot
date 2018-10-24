@@ -1,13 +1,12 @@
-exports.run = async (client, message, args, level) => {
+exports.run = (client, message, args, level) => {
   const deleteCount = parseInt(args[0], 10);
 
-  if (!message.member.hasPermission('MANAGE_MESSAGES')) 
+  if (!message.member.hasPermission('MANAGE_MESSAGES'))
     return message.channel.send('Sorry, but you do not have the **Manage Messages** permissions! If you think this is an error, contact an <@136943278854504448>');
   if (!message.guild.member(client.user).hasPermission('MANAGE_MESSAGES'))
     return message.channel.send('I do not have the **Manage Messages** permission in this server.');
 
   if (!args[0]) return message.channel.send('You must specify a number of messages.');
-  if (args[0] < 1) return message.channel.send('Please provide a number greater than 1.');
   if (args[0] > 100) return message.channel.send('Please provide a number less than 100.');
   if (isNaN(args[0])) return message.channel.send('Please provide a correct number.');
 
