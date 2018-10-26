@@ -22,7 +22,7 @@ const client = new Discord.Client();
 
 client.config = require("./config.js");
 
-client.logger = require("./util/Logger");
+client.logger = require("./modules/Logger");
 
 require("./modules/functions.js")(client);
 
