@@ -12,7 +12,7 @@ module.exports = (client, message) => {
   const settings = message.settings = client.getGuildSettings(message.guild);
 
   const shortLinks = ["goo.gl", "shorte.st", "adf.ly", "bc.vc", "bit.ly", "bit.do", "soo.gd", "7.ly", "5.gp", "tiny.cc", "ouo.io", "zzb.bz", "adfoc.us", "my.su"]
-  const swearWords = ["faggot", "gini", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer"]
+  const swearWords = ["faggot", "kike", "n1gga", "n1gger", "nigg3r", "nigga", "nigger", "retard", "niqqa", "n1qqa", "niqqer", "n1qqer"]
 
   if (message.content.toLowerCase().includes('thicc')) {
     Promise.all([
