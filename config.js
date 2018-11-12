@@ -13,6 +13,7 @@ const config = {
     "modLogChannel": "logs",
     "modRole1": "Moderators",
     "modRole2": "Head Moderators",
+    "modRole3": "Senior Moderators",
     "adminRole": "Administrator",
     "systemNotice": "true", // This gives a notice when a user tries to run a command that they do not have permission to use.
     "welcomeChannel": "welcome",
@@ -45,8 +46,11 @@ const config = {
         try {
           const modRole1 = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole1.toLowerCase());
           const modRole2 = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole2.toLowerCase());
+          const modRole3 = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole3.toLowerCase());
           if (modRole1 && message.member.roles.has(modRole1.id)) return true;
           if (modRole2 && message.member.roles.has(modRole2.id)) return true;
+          if (modRole3 && message.member.roles.has(modRole3.id)) return true;
+
         } catch (e) {
           return false;
         }
