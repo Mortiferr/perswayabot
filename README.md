@@ -1,3 +1,4 @@
+# INACTIVE -- feel free to poke around if you really want, but there's better examples out there
 # perswayabot
 A bot for the streamer, Perswayable. Contact me if you want to adapt this bot for your use.
 
